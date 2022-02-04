@@ -33,5 +33,7 @@ def _ldap_slugify(uid: str) -> str:
 
 LDAP_MAP_USERNAME_TO_UID = _ldap_slugify
 
+EOF
+
 echo "LDAP CONFIG SET" > /ldap_config_set
 fi
