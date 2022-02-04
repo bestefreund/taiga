@@ -93,7 +93,7 @@ services:
       - /srv/taiga/back/media-data:/taiga-back/media
     networks:
       - network
-#      - mail
+      - mail
     depends_on:
       - taiga-db
       - taiga-back
@@ -174,7 +174,7 @@ services:
       - /srv/taiga/back/media-data:/taiga/media
     networks:
       - network
-#      - nginx
+      - nginx
     depends_on:
       - taiga-front
       - taiga-back
