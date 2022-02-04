@@ -37,3 +37,7 @@ EOF
 
 echo "LDAP CONFIG SET" > /ldap_config_set
 fi
+
+# Email Workaround: Remove SMTP user+password
+sed -i "s/EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'user')/EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')/g" /taiga-back/settings/config.py
+sed -i "s/EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'password')/EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')/g" /taiga-back/settings/config.py
