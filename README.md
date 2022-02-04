@@ -38,6 +38,7 @@ sed -i 's/image: taigaio\/taiga-back:latest/image: taiga-back/g' docker-compose.
 
 ### Configuration
 
+Create a file `.env` for adjusting the config. You can use `.env.example` as template.
 The whole configuration is done with adjusting`.env` & `docker-compose.yml`.
 Just adjust it & replace the example values with your desired properties.
 
