@@ -15,7 +15,7 @@ The LDAP & email properties are commented out & you need to add them by yourself
 
 Clone this repo and change into it
 ```sh
-git clone https://gitlab.bjoern-freund.de/docker/taiga.git
+git clone https://github.com/bestefreund/taiga.git
 cd taiga
 ```
 
