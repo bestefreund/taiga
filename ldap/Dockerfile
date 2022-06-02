@@ -1,4 +1,4 @@
-FROM taigaio/taiga-back:latest
+FROM taigaio/taiga-back:6.5.1
 
 COPY ldap_config /ldap_config
 
