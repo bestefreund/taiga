@@ -9,6 +9,7 @@ x-environment:
   POSTGRES_HOST: "${POSTGRES_HOST}"
   
   # Taiga settings
+  TAIGA_VERSION: "6.5.1"
   TAIGA_SECRET_KEY: "${TAIGA_SECRET_KEY}"
   TAIGA_SITES_SCHEME: "${TAIGA_SITES_SCHEME}"
   TAIGA_SITES_DOMAIN: "${TAIGA_SITES_DOMAIN}"
@@ -65,7 +66,7 @@ services:
       - network
 
   taiga-back:
-    image: taigaio/taiga-back:latest
+    image: "taigaio/taiga-back:${TAIGA_VERSION}"
     restart: always
     hostname: 'taiga-back'
     container_name: 'taiga-back'
@@ -82,7 +83,7 @@ services:
       - taiga-async-rabbitmq
 
   taiga-async:
-    image: taigaio/taiga-back:latest
+    image: "taigaio/taiga-back:${TAIGA_VERSION}"
     entrypoint: ["/taiga-back/docker/async_entrypoint.sh"]
     restart: always
     hostname: 'taiga-async'
@@ -113,7 +114,7 @@ services:
       - network
 
   taiga-front:
-    image: taigaio/taiga-front:latest
+    image: "taigaio/taiga-front:${TAIGA_VERSION}"
     restart: always
     hostname: 'taiga-front'
     container_name: 'taiga-front'
@@ -125,7 +126,7 @@ services:
       - network
 
   taiga-events:
-    image: taigaio/taiga-events:latest
+    image: "taigaio/taiga-events:${TAIGA_VERSION}"
     restart: always
     hostname: 'taiga-events'
     container_name: 'taiga-events'
@@ -153,7 +154,7 @@ services:
       - network
 
   taiga-protected:
-    image: taigaio/taiga-protected:latest
+    image: "taigaio/taiga-protected:${TAIGA_VERSION}"
     restart: always
     hostname: 'taiga-protected'
     container_name: 'taiga-protected'
