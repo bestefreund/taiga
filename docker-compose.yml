@@ -126,7 +126,7 @@ services:
       - network
 
   taiga-events:
-    image: "taigaio/taiga-events:6.5.0"
+    image: "taigaio/taiga-events:${TAIGA_VERSION}"
     restart: always
     hostname: 'taiga-events'
     container_name: 'taiga-events'
