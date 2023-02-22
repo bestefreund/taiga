@@ -16,14 +16,12 @@ x-environment:
   TAIGA_SUBPATH: "" # "" or "/subpath"
   
   # Email settings
-  #EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
-  #DEFAULT_FROM_EMAIL: "${DEFAULT_FROM_EMAIL}"
-  #EMAIL_USE_TLS: "${EMAIL_USE_TLS}"
-  #EMAIL_USE_SSL: "${EMAIL_USE_SSL}"
-  #EMAIL_HOST: "${EMAIL_HOST}"
-  #EMAIL_PORT: "${EMAIL_PORT}"
-  #EMAIL_HOST_USER: "${EMAIL_HOST_USER}"
-  #EMAIL_HOST_PASSWORD: "${EMAIL_HOST_PASSWORD}"
+  EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
+  DEFAULT_FROM_EMAIL: "${DEFAULT_FROM_EMAIL}"
+  EMAIL_USE_TLS: "${EMAIL_USE_TLS}"
+  EMAIL_USE_SSL: "${EMAIL_USE_SSL}"
+  EMAIL_HOST: "${EMAIL_HOST}"
+  EMAIL_PORT: "${EMAIL_PORT}"
   
   # Rabbit settings
   RABBITMQ_USER: "${RABBITMQ_USER}"
@@ -32,23 +30,24 @@ x-environment:
   ENABLE_TELEMETRY: "False"
   
   # LDAP settings
-  #LDAP_ENABLED: "${LDAP_ENABLED}"
-  #LDAP_SERVER: "${LDAP_SERVER}"
-  #LDAP_PORT: "${LDAP_PORT}"
-  #LDAP_START_TLS: "${LDAP_START_TLS}"
-  #LDAP_SEARCH_BASE: "${LDAP_SEARCH_BASE}"
-  #LDAP_BIND_DN: "${LDAP_BIND_DN}"
-  #LDAP_BIND_PASSWORD: "${LDAP_BIND_PASSWORD}"
+  LDAP_ENABLED: "${LDAP_ENABLED}"
+  LDAP_SERVER: "${LDAP_SERVER}"
+  LDAP_PORT: "${LDAP_PORT}"
+  LDAP_START_TLS: "${LDAP_START_TLS}"
+  LDAP_SEARCH_BASE: "${LDAP_SEARCH_BASE}"
+  LDAP_BIND_DN: "${LDAP_BIND_DN}"
+  LDAP_BIND_PASSWORD: "${LDAP_BIND_PASSWORD}"
+  LDAP_CERT_PATH: "${LDAP_CERT_PATH}"
 
 networks:
   network:
     driver: bridge
-#  nginx:
-#    external:
-#      name: nginx-default_network
-#  mail:
-#    external:
-#      name: mail_network
+  nginx:
+    external:
+      name: nginx-default_network
+  mail:
+    external:
+      name: mail_network
 
 services:
   taiga-db:
@@ -66,7 +65,7 @@ services:
       - network
 
   taiga-back:
-    image: "taigaio/taiga-back:${TAIGA_VERSION}"
+    image: registry.bjoern-freund.de/taiga-back
     restart: always
     hostname: 'taiga-back'
     container_name: 'taiga-back'
@@ -74,16 +73,17 @@ services:
     volumes:
       - /srv/taiga/back/static-data:/taiga-back/static
       - /srv/taiga/back/media-data:/taiga-back/media
+      - "${LDAP_CERT_PATH}:${LDAP_CERT_PATH}"
     networks:
       - network
-#      - mail
+      - mail
     depends_on:
       - taiga-db
       - taiga-events-rabbitmq
       - taiga-async-rabbitmq
 
   taiga-async:
-    image: "taigaio/taiga-back:${TAIGA_VERSION}"
+    image: registry.bjoern-freund.de/taiga-back
     entrypoint: ["/taiga-back/docker/async_entrypoint.sh"]
     restart: always
     hostname: 'taiga-async'
@@ -94,7 +94,7 @@ services:
       - /srv/taiga/back/media-data:/taiga-back/media
     networks:
       - network
-#      - mail
+      - mail
     depends_on:
       - taiga-db
       - taiga-back
@@ -175,7 +175,7 @@ services:
       - /srv/taiga/back/media-data:/taiga/media
     networks:
       - network
-#      - nginx
+      - nginx
     depends_on:
       - taiga-front
       - taiga-back
