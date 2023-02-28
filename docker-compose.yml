@@ -43,11 +43,11 @@ networks:
   network:
     driver: bridge
   nginx:
-    external:
-      name: nginx-default_network
+    name: nginx-default_network
+    external: true
   mail:
-    external:
-      name: mail_network
+    name: mail_network
+    external: true
 
 services:
   taiga-db:
